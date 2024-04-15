@@ -4,12 +4,10 @@
 	import Navbar from '../components/Navbar.svelte';
 </script>
 
-<div class="flex h-screen w-screen flex-col items-center bg-black">
-	<Navbar />
-	<div class="grid h-full grid-flow-col grid-rows-2 place-content-center">
-		<InputBox class="my-auto" />
-		<div>
-			<Content />
-		</div>
+<div class="relative h-screen w-screen overflow-hidden bg-black">
+	<div class="mx-auto grid h-full w-[80vw] grid-flow-col grid-rows-2 pb-20">
+		<InputBox class="m-auto" />
+		<Content />
 	</div>
+	<Navbar class="fixed bottom-0 left-1/2 -translate-x-1/2 -translate-y-full" />
 </div>

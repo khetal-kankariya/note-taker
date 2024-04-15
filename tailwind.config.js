@@ -28,6 +28,10 @@ const config = {
 					DEFAULT: 'hsl(var(--secondary) / <alpha-value>)',
 					foreground: 'hsl(var(--secondary-foreground) / <alpha-value>)'
 				},
+				searchshortcutbg: {
+					DEFAULT: 'hsl(var(--search-shortcut-bg) / <alpha-value>)',
+					foreground: 'hsl(var(--fluogreen-foreground) / <alpha-value>)'
+				},
 				searchbg: {
 					DEFAULT: 'hsl(var(--search-bg) / <alpha-value>)',
 					foreground: 'hsl(var(--fluogreen-foreground) / <alpha-value>)'
