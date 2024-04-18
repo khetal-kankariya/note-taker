@@ -1,4 +1,7 @@
 // See https://kit.svelte.dev/docs/types#app
+
+import type { PrismaClient } from '@prisma/client';
+
 // for information about these interfaces
 declare global {
 	namespace App {
@@ -8,15 +11,24 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
 	export type NoteMode = 'note' | 'draw' | 'list' | 'todo' | 'image' | 'table' | 'audio' | 'more';
+
+	type dbNote = {
+		id: number;
+		title: string;
+		content: string;
+		creation_time: Date;
+		modification_time: Date;
+	};
 
 	type TNote = {
 		id: string;
-		timeCreated: string;
-		timeModified: string;
+		// timeCreated: string;
+		// timeModified: string;
 		title: string;
 		index: number;
-		colIndex: number = index % colNums;
+		colIndex: number;
 	} & (
 		| {
 				type: 'note';
@@ -31,6 +43,8 @@ declare global {
 				content: string[][];
 		  }
 	);
+
+	var prisma: PrismaClient;
 }
 
-export { NoteMode };
+export {};

@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
-	import { onMount } from 'svelte';
-	import { notes } from '../stores';
+	import type { PageData } from '../routes/$types';
+	// import { notes } from '../stores';
 	import NotesActions from './NotesActions.svelte';
 	import SingleNote from './TextNote.svelte';
-	import { flip } from 'svelte/animate';
 
-	let _notes = $state($notes);
+	let { data }: { data: PageData } = $props();
+
+	let { notes } = data;
+
+	let _notes = notes;
 	let _notes__notrendered = $state(_notes);
 	const _notes__notrendered__shift = () => {
 		_notes__notrendered.shift();
@@ -30,9 +33,9 @@
 			}
 		};
 
-		_notes.forEach((_note) => {
-			_note.colIndex = (_note.index % num_cols) + 1;
-		});
+		// _notes.forEach((_note) => {
+		// 	_note.colIndex = (_note.index % num_cols) + 1;
+		// });
 	});
 </script>
 
@@ -50,7 +53,7 @@
 		class={`notes-content mx-auto grid h-80 w-[80vw]  gap-4 overflow-y-scroll`}
 		style={`grid-template-columns: repeat(${num_cols}, 1fr);`}
 	>
-		{#key num_cols}
+		<!-- {#key num_cols}
 			{#each { length: num_cols } as _, col_index}
 				<div class={cn(`col-${col_index + 1}`, 'flex h-auto flex-1 flex-col gap-4')}>
 					{#each { length: _notes.length } as _, _noteindex}
@@ -60,7 +63,13 @@
 					{/each}
 				</div>
 			{/each}
-		{/key}
+		{/key} -->
+
+		<div class={cn('flex h-auto flex-1 flex-col gap-4')}>
+			{#each { length: _notes.length } as _, _noteindex}
+				<SingleNote class="max-w-80" note={_notes[_noteindex]} />
+			{/each}
+		</div>
 	</div>
 
 	{#if isHovered}
