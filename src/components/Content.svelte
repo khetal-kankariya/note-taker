@@ -1,16 +1,21 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
+
 	import { onMount } from 'svelte';
+
 	import { notes } from '../stores';
 	import NotesActions from './NotesActions.svelte';
 	import SingleNote from './TextNote.svelte';
+
 	import { flip } from 'svelte/animate';
 
 	let _notes = $state($notes);
 	let _notes__notrendered = $state(_notes);
+
 	const _notes__notrendered__shift = () => {
 		_notes__notrendered.shift();
 	};
+
 	let displayMode: 'grid' | 'list' = $state('grid');
 	let num_cols = $state(4);
 
@@ -21,6 +26,7 @@
 			let notes__container =
 				document.querySelector('.notes-content') || document.createElement('div');
 			let notes__width = notes__container.getBoundingClientRect().width;
+
 			if (notes__width <= 656) {
 				num_cols = 2;
 			} else if (notes__width <= 992) {
@@ -47,14 +53,26 @@
 	}}
 >
 	<div
-		class={`notes-content mx-auto grid h-80 w-[80vw]  gap-4 overflow-y-scroll`}
-		style={`grid-template-columns: repeat(${num_cols}, 1fr);`}
+		class={`notes-content mx-auto grid h-80 w-[80vw] gap-4 overflow-y-scroll`}
+		style={`grid-template-columns: repeat($ {
+      num_cols
+    }
+
+    , 1fr);
+  `}
 	>
-		{#key num_cols}
-			{#each { length: num_cols } as _, col_index}
-				<div class={cn(`col-${col_index + 1}`, 'flex h-auto flex-1 flex-col gap-4')}>
-					{#each { length: _notes.length } as _, _noteindex}
-						{#if _notes[_noteindex].colIndex == col_index + 1}
+		{#key num_cols}{#each { length: num_cols } as _, col_index}
+				<div
+					class={cn(
+						`col-$ {
+      col_index + 1
+    }
+
+    `,
+						'flex h-auto flex-1 flex-col gap-4'
+					)}
+				>
+					{#each { length: _notes.length } as _, _noteindex}{#if _notes[_noteindex].colIndex == col_index + 1}
 							<SingleNote class="max-w-80" note={_notes[_noteindex]} />
 						{/if}
 					{/each}
@@ -62,18 +80,7 @@
 			{/each}
 		{/key}
 	</div>
-
 	{#if isHovered}
 		<NotesActions class="notes-actions" />
 	{/if}
 </div>
-
-<style lang="scss">
-	// .notes__container {
-	// 	&:hover {
-	// 		:global(.notes-actions) {
-	// 			display: flex;
-	// 		}
-	// 	}
-	// }
-</style>
